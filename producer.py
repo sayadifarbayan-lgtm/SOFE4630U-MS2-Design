@@ -17,7 +17,10 @@ with open("Labels.csv", mode="r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
 
     for row in reader:
-        message = json.dumps(row).encode("utf-8")
+        row["time"] = float(row["time"])
+        row["temperature"] = float(row["temperature"])
+        row["humidity"] = float(row["humidity"])
+        row["pressure"] = float(row["pressure"])
 
         future = publisher.publish(topic_path, message)
         future.result()
